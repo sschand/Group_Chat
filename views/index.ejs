@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group Chat</title>
+        <link rel="stylesheet" href="skeleton.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var sid = '<%= sid %>';
+                var socket = io.connect();
+
+                // var prompt = '<%= prompt %>';
+                var name;
+                // console.log(prompt);
+                // if(!prompt){
+                //     console.log('here');
+                    // User first enters room:
+                    name = prompt('What is your name?');
+                    socket.emit("got_new_user", {name: name, sid: sid});
+                // }else{
+                //     console.log('not');
+                // }
+
+
+
+                //Listeners:
+                // new user
+                socket.on("new_user", function(data){
+                    $(".users").append("<p>"+data.name+"</p>");
+                })
+
+                // existing users
+                socket.on("existing_users", function(data){
+                    for(var key in data.existing_users){
+                        $(".users").append("<p id='"+key+"'>"+ data.existing_users[key]+ "</p>");
+                    }
+                })
+
+
+                $("#message_form").submit(function(e){
+                    e.preventDefault();
+                    var userID = $("#userID").val();
+                    var message = $("#message").val();
+
+                    socket.emit("new_message", {userID: userID, name: name, message: message});
+                });
+
+                socket.on("message_added", function(){
+                    $("#message").val('');
+                });
+
+                socket.on("new_message_added", function(data){
+                    $(".chat").html('');
+                    for (var message in data.messages){
+                        $(".chat").append('<p>'+ data.messages[message].name +': '+data.messages[message].message+'</p>');
+                    }
+                })
+
+                // // epic button pressed
+                // $("#epic_button").click(function(){
+                //     socket.emit("update_count");``
+                // });
+                //
+                // // broadcast full to all users
+                // socket.on("count_updated", function(data){
+                //     $("#count").html(data.count);
+                // })
+                //
+                // // reset button pressed
+                // $("#reset_button").click(function(){
+                //     socket.emit("reset_count");
+                // });
+
+            })
+        </script>
+    </head>
+    <body>
+        <div class="container div_border">
+            <h3>Conversation Board</h3>
+            <!-- <div class=" div_border">
+                <h5>Users:</h5>
+                <div class="users container">
+
+                </div>
+            </div> -->
+            <div class="chat_room">
+                <div class="two columns user">
+
+                </div>
+                <div class="ten columns chat">
+
+                </div>
+            </div>
+
+            <form id="message_form" action="index.html" method="post">
+                <input type="hidden" id="userID" name="userID" value="<%=sid%>">
+                <textarea class="u-full-width" id="message" name="message"></textarea>
+                <input class="button-primary right" type="submit" value="Submit">
+            </form>
+
+        </div>
+    </body>
+</html>
