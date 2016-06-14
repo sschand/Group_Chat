@@ -66,7 +66,7 @@
                 socket.on("new_message_added", function(data){
                     $(".chat").html('');
                     for (var message in data.messages){
-                        $(".chat").append('<p>'+ data.messages[message].name +': '+data.messages[message].message+'</p>');
+                        $(".chat").append('<div class="row"><div class="two columns">'+ data.messages[message].name +': </div><div class="ten columns">'+data.messages[message].message+'</div></div>');
                     }
                 });
 
@@ -84,18 +84,18 @@
     <body>
         <div class="container div_border">
             <h3>Conversation Board</h3>
-            <div class=" div_border">
+            <div class="user_list">
                 <h5>Users:</h5>
                 <div class="users container">
 
                 </div>
             </div>
             <div class="chat_room">
-                <div class="two columns user">
+                <h5>Ready..set...conversate!</h5>
 
-                </div>
-                <div class="ten columns chat">
-
+                <div class="container">
+                    <div class="chat ">
+                    </div>
                 </div>
             </div>
 

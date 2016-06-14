@@ -8,15 +8,29 @@
 .button_div{
     text-align: center;
 }
-/*#epic_button{
-    width: 50%;
-    height: 25%;
-}
-#reset_button{
-    background-color: red;
-}*/
-
 .users p{
     /*color: #c0ffd7;*/
     color: #12863c;
+
+}
+
+p{
+    margin-bottom: 0%;
+}
+
+.chat_room, .user_lists{
+    padding: .5em;
+}
+
+.chat{
+    height:15em;
+    overflow:scroll;
+    overflow-x:hidden;
+    /*overflow-y:hidden;*/
+}
+.users{
+    height:5em;
+    overflow:scroll;
+    overflow-x:hidden;
+    /*overflow-y:hidden;*/
 }
