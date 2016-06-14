@@ -9,17 +9,18 @@
         <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                var sid = '<%= sid %>';
+
                 var socket = io.connect();
 
-                // var prompt = '<%= prompt %>';
+                var uID;
+
                 var name;
                 // console.log(prompt);
                 // if(!prompt){
                 //     console.log('here');
                     // User first enters room:
                     name = prompt('What is your name?');
-                    socket.emit("got_new_user", {name: name, sid: sid});
+                    socket.emit("got_new_user", {name: name});
                 // }else{
                 //     console.log('not');
                 // }
@@ -29,13 +30,23 @@
                 //Listeners:
                 // new user
                 socket.on("new_user", function(data){
-                    $(".users").append("<p>"+data.name+"</p>");
+
+                    var id = JSON.stringify(data.uId);
+                    var id2 = id.slice(3, -1);
+
+                    $(".users").append("<p class="+id2+">"+data.name+"</p>");
                 })
 
                 // existing users
                 socket.on("existing_users", function(data){
                     for(var key in data.existing_users){
-                        $(".users").append("<p id='"+key+"'>"+ data.existing_users[key]+ "</p>");
+                        if(data.uID != key){
+
+                            var id = JSON.stringify(key);
+                            var id2 = id.slice(3,-1);
+
+                            $(".users").append("<p class='"+id2+"'>"+ data.existing_users[key].name+ "</p>");
+                        }
                     }
                 })
 
@@ -57,22 +68,15 @@
                     for (var message in data.messages){
                         $(".chat").append('<p>'+ data.messages[message].name +': '+data.messages[message].message+'</p>');
                     }
-                })
+                });
 
-                // // epic button pressed
-                // $("#epic_button").click(function(){
-                //     socket.emit("update_count");``
-                // });
-                //
-                // // broadcast full to all users
-                // socket.on("count_updated", function(data){
-                //     $("#count").html(data.count);
-                // })
-                //
-                // // reset button pressed
-                // $("#reset_button").click(function(){
-                //     socket.emit("reset_count");
-                // });
+                socket.on("disconnect_user", function(data){
+
+                    var id = JSON.stringify(data.disconnect_id);
+                    var id2 = id.slice(3,-1);
+
+                    $("."+id2+"").css('color', '#888').css('font-style', 'italic');
+                });
 
             })
         </script>
@@ -80,12 +84,12 @@
     <body>
         <div class="container div_border">
             <h3>Conversation Board</h3>
-            <!-- <div class=" div_border">
+            <div class=" div_border">
                 <h5>Users:</h5>
                 <div class="users container">
 
                 </div>
-            </div> -->
+            </div>
             <div class="chat_room">
                 <div class="two columns user">
 
@@ -96,7 +100,7 @@
             </div>
 
             <form id="message_form" action="index.html" method="post">
-                <input type="hidden" id="userID" name="userID" value="<%=sid%>">
+                <input type="hidden" id="userID" name="userID" >
                 <textarea class="u-full-width" id="message" name="message"></textarea>
                 <input class="button-primary right" type="submit" value="Submit">
             </form>

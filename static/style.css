@@ -8,10 +8,15 @@
 .button_div{
     text-align: center;
 }
-#epic_button{
+/*#epic_button{
     width: 50%;
     height: 25%;
 }
 #reset_button{
     background-color: red;
+}*/
+
+.users p{
+    /*color: #c0ffd7;*/
+    color: #12863c;
 }
