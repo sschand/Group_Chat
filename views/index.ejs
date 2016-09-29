@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
     <!-- Compiled and minified JavaScript -->
@@ -38,7 +36,6 @@
         //Listeners:
         // new user
         socket.on("new_user", function(data){
-
             var id = JSON.stringify(data.uId);
             var id2 = id.slice(3, -1);
 
@@ -79,14 +76,13 @@
         });
 
         socket.on("disconnect_user", function(data){
-
             var id = JSON.stringify(data.disconnect_id);
             var id2 = id.slice(3,-1);
 
-            $("."+id2+"").css('color', '#888').css('font-style', 'italic');
+            $("."+id2+"").css('color', 'grey').css('font-style', 'italic');
         });
 
-})
+    });
 </script>
 </head>
 <body>
