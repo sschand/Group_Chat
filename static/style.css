@@ -35,7 +35,7 @@ p{
 
 
 body{
-    background-color: #b2ebf2;
+    background-color: #81d4fa;
      overflow-y: scroll;
 }
 nav{
@@ -48,16 +48,39 @@ body .container .row{
 body #chat_form{
     background-color: #eceff1;
 }
+
 .users, .chat{
     height: 50vh;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: scroll;;
+
+    border: .2em solid aliceblue;
+    border-style: double;
+    padding: 1em;
 }
 .users p{
-    color: #0288d1;
+    color: #01579b;
+    margin: 0%;
+
     /*text-decoration: */
 }
 .btn{
     background-color: #0288d1 !important;
+}
+
+.chat_room, .user_list{
+    padding: .2em;
+    /*border: .2em solid aliceblue;*/
+    margin: 1em 0em;
+}
+.user_list{
+    /*margin-right: .5em;*/
+    /*border-style: inset;*/
+}
+.chat_room{
+    border-left: .2em solid aliceblue;
+    /*border-style: outset;*/
+    /*margin-left: -.5em;*/
+
 }
