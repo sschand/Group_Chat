@@ -1,39 +1,3 @@
-/*.div_border{
-    border: 1px solid black;
-    padding: 2% 5%;
-}
-.right{
-    float: right;
-}
-.button_div{
-    text-align: center;
-}
-.users p{
-
-    color: #12863c;
-
-}
-
-p{
-    margin-bottom: 0%;
-}
-
-.chat_room, .user_lists{
-    padding: .5em;
-}
-
-.chat{
-    height:15em;
-    overflow:scroll;
-    overflow-x:hidden;
-}
-.users{
-    height:5em;
-    overflow:scroll;
-    overflow-x:hidden;
-}*/
-
-
 body{
     background-color: #81d4fa;
      overflow-y: scroll;
