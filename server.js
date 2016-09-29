@@ -25,10 +25,23 @@ app.get('/', function(req, res){
     res.render('index');
 })
 
-// server stuff
-var server = app.listen(8004, function(){
-    console.log('listening on port 8004');
-})
+
+app.set('port', (process.env.PORT || 5000));
+
+
+// var server = app.listen(8000, function(){
+//     console.log('listening on port 8000');
+// })
+
+var server = app.listen(app.get('port'), function(){
+    console.log("listening on port ", app.get('port'));
+   });
+
+
+// // server stuff
+// var server = app.listen(8004, function(){
+//     console.log('listening on port 8004');
+// })
 
 // socket stuff
 var io = require('socket.io').listen(server);
