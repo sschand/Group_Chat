@@ -50,7 +50,7 @@ body #chat_form{
 }
 
 .users, .chat{
-    height: 50vh;
+    height: 40vh;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: scroll;;
@@ -80,4 +80,7 @@ body #chat_form{
 }
 #chat_form{
     padding: 2em;
+}
+.new_user_added{
+    font-style: italic;
 }

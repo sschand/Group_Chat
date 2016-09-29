@@ -35,9 +35,6 @@
             socket.emit("got_new_user", {name: name});
         }
 
-
-
-
         //Listeners:
         // new user
         socket.on("new_user", function(data){
@@ -45,7 +42,7 @@
             var id = JSON.stringify(data.uId);
             var id2 = id.slice(3, -1);
 
-            $(".users").append("<p class="+id2+">"+data.name+"</p>");
+            $(".users").append("<p class=new_user_added "+id2+">"+data.name+"</p>");
         })
 
         // existing users
@@ -89,8 +86,8 @@
             $("."+id2+"").css('color', '#888').css('font-style', 'italic');
         });
 
-    })
-    </script>
+})
+</script>
 </head>
 <body>
     <div class="container">
@@ -129,6 +126,32 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+
+    <!-- Modal Trigger -->
+    <!-- <a class="modal-trigger waves-effect waves-light btn" href="#modal1">Modal</a> -->
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Entering Chatroom</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="user_name" type="text" class="validate">
+                            <label for="user_name">Name</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="enterName" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
         </div>
     </div>
 </body>
