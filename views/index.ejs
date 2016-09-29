@@ -2,28 +2,38 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Group Chat</title>
-        <link rel="stylesheet" href="skeleton.css">
+        <title>Chit Chat Room</title>
+        <!-- <link rel="stylesheet" href="skeleton.css"> -->
         <link rel="stylesheet" href="style.css">
+
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+
+
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-
                 var socket = io.connect();
 
                 var uID;
 
                 var name;
-                // console.log(prompt);
-                // if(!prompt){
-                //     console.log('here');
+
                     // User first enters room:
                     name = prompt('What is your name?');
-                    socket.emit("got_new_user", {name: name});
-                // }else{
-                //     console.log('not');
-                // }
+
+                    // if(name === null || name == ''){
+                    //     alert("You must enter your name to enter the Chatroom");
+                    //     window.location = "/";
+                    // }else{
+
+                        socket.emit("got_new_user", {name: name});
+                    // }
+
 
 
 
@@ -82,8 +92,11 @@
         </script>
     </head>
     <body>
-        <div class="container div_border">
-            <h3>Conversation Board</h3>
+        <div class="container">
+            <div class="row">
+                 <h3 id="chat_room">Chit-Chat Room</h3>
+            </div>
+            <!-- <h3 id="chat_room">Chit-Chat Room</h3>
             <div class="user_list">
                 <h5>Users:</h5>
                 <div class="users container">
@@ -91,7 +104,33 @@
                 </div>
             </div>
             <div class="chat_room">
-                <h5>Ready..set...conversate!</h5>
+                <h5>Ready..set...chat!</h5>
+
+                <div class="container">
+                    <div class="chat ">
+                    </div>
+                </div>
+            </div>
+
+            <form id="message_form" action="index.html" method="post">
+                <input type="hidden" id="userID" name="userID" >
+                <textarea class="u-full-width" id="message" name="message"></textarea>
+                <input class="button-primary right" type="submit" value="Submit">
+            </form> -->
+
+        </div>
+
+
+        <!-- <div class="container div_border">
+            <h3 id="chat_room">Chit-Chat Room</h3>
+            <div class="user_list">
+                <h5>Users:</h5>
+                <div class="users container">
+
+                </div>
+            </div>
+            <div class="chat_room">
+                <h5>Ready..set...chat!</h5>
 
                 <div class="container">
                     <div class="chat ">
@@ -104,7 +143,6 @@
                 <textarea class="u-full-width" id="message" name="message"></textarea>
                 <input class="button-primary right" type="submit" value="Submit">
             </form>
-
-        </div>
+        </div> -->
     </body>
 </html>

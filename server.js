@@ -26,8 +26,8 @@ app.get('/', function(req, res){
 })
 
 // server stuff
-var server = app.listen(8000, function(){
-    console.log('listening on port 8000');
+var server = app.listen(8004, function(){
+    console.log('listening on port 8004');
 })
 
 // socket stuff
