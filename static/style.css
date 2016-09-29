@@ -55,15 +55,13 @@ body #chat_form{
     overflow-x: hidden;
     overflow-y: scroll;;
 
-    border: .2em solid aliceblue;
+    border: .5em solid aliceblue;
     border-style: double;
     padding: 1em;
 }
 .users p{
     color: #01579b;
     margin: 0%;
-
-    /*text-decoration: */
 }
 .btn{
     background-color: #0288d1 !important;
@@ -71,16 +69,15 @@ body #chat_form{
 
 .chat_room, .user_list{
     padding: .2em;
-    /*border: .2em solid aliceblue;*/
     margin: 1em 0em;
 }
-.user_list{
-    /*margin-right: .5em;*/
-    /*border-style: inset;*/
-}
+
 .chat_room{
     border-left: .2em solid aliceblue;
-    /*border-style: outset;*/
-    /*margin-left: -.5em;*/
-
+}
+.active{
+    color: #0288d1 !important;
+}
+#chat_form{
+    padding: 2em;
 }
