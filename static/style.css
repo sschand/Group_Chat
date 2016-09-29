@@ -36,4 +36,28 @@ p{
 
 body{
     background-color: #b2ebf2;
+     overflow-y: scroll;
+}
+nav{
+    background-color: #0288d1 !important;
+
+}
+body .container .row{
+    margin: 0px auto !important;
+}
+body #chat_form{
+    background-color: #eceff1;
+}
+.users, .chat{
+    height: 50vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;;
+}
+.users p{
+    color: #0288d1;
+    /*text-decoration: */
+}
+.btn{
+    background-color: #0288d1 !important;
 }

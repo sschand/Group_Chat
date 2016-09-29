@@ -1,148 +1,184 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Chit Chat Room</title>
-        <!-- <link rel="stylesheet" href="skeleton.css"> -->
-        <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="utf-8">
+    <title>Chit Chat Room</title>
+    <!-- <link rel="stylesheet" href="skeleton.css"> -->
+    <link rel="stylesheet" href="style.css">
 
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-
-
-
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                var socket = io.connect();
-
-                var uID;
-
-                var name;
-
-                    // User first enters room:
-                    name = prompt('What is your name?');
-
-                    // if(name === null || name == ''){
-                    //     alert("You must enter your name to enter the Chatroom");
-                    //     window.location = "/";
-                    // }else{
-
-                        socket.emit("got_new_user", {name: name});
-                    // }
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var socket = io.connect();
 
-                //Listeners:
-                // new user
-                socket.on("new_user", function(data){
+        var uID;
 
-                    var id = JSON.stringify(data.uId);
-                    var id2 = id.slice(3, -1);
+        var name;
 
-                    $(".users").append("<p class="+id2+">"+data.name+"</p>");
-                })
+        // User first enters room:
+        name = prompt('What is your name?');
 
-                // existing users
-                socket.on("existing_users", function(data){
-                    for(var key in data.existing_users){
-                        if(data.uID != key){
+        if(name === null || name == ''){
+            alert("You must enter your name to enter the Chatroom");
+            window.location = "/";
+        }else{
 
-                            var id = JSON.stringify(key);
-                            var id2 = id.slice(3,-1);
-
-                            $(".users").append("<p class='"+id2+"'>"+ data.existing_users[key].name+ "</p>");
-                        }
-                    }
-                })
+            socket.emit("got_new_user", {name: name});
+        }
 
 
-                $("#message_form").submit(function(e){
-                    e.preventDefault();
-                    var userID = $("#userID").val();
-                    var message = $("#message").val();
 
-                    socket.emit("new_message", {userID: userID, name: name, message: message});
-                });
 
-                socket.on("message_added", function(){
-                    $("#message").val('');
-                });
+        //Listeners:
+        // new user
+        socket.on("new_user", function(data){
 
-                socket.on("new_message_added", function(data){
-                    $(".chat").html('');
-                    for (var message in data.messages){
-                        $(".chat").append('<div class="row"><div class="two columns">'+ data.messages[message].name +': </div><div class="ten columns">'+data.messages[message].message+'</div></div>');
-                    }
-                });
+            var id = JSON.stringify(data.uId);
+            var id2 = id.slice(3, -1);
 
-                socket.on("disconnect_user", function(data){
+            $(".users").append("<p class="+id2+">"+data.name+"</p>");
+        })
 
-                    var id = JSON.stringify(data.disconnect_id);
+        // existing users
+        socket.on("existing_users", function(data){
+            for(var key in data.existing_users){
+                if(data.uID != key){
+
+                    var id = JSON.stringify(key);
                     var id2 = id.slice(3,-1);
 
-                    $("."+id2+"").css('color', '#888').css('font-style', 'italic');
-                });
+                    $(".users").append("<p class='"+id2+"'>"+ data.existing_users[key].name+ "</p>");
+                }
+            }
+        })
 
-            })
-        </script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                 <h3 id="chat_room">Chit-Chat Room</h3>
+
+        $("#message_form").submit(function(e){
+            e.preventDefault();
+            var userID = $("#userID").val();
+            var message = $("#message").val();
+
+            socket.emit("new_message", {userID: userID, name: name, message: message});
+        });
+
+        socket.on("message_added", function(){
+            $("#message").val('');
+        });
+
+        socket.on("new_message_added", function(data){
+            $(".chat").html('');
+            for (var message in data.messages){
+                $(".chat").append('<div class="row"><div class="col s2">'+ data.messages[message].name +': </div><div class="col s6">'+data.messages[message].message+'</div></div>');
+            }
+        });
+
+        socket.on("disconnect_user", function(data){
+
+            var id = JSON.stringify(data.disconnect_id);
+            var id2 = id.slice(3,-1);
+
+            $("."+id2+"").css('color', '#888').css('font-style', 'italic');
+        });
+
+    })
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <nav>
+            <div id="chat_room">
+                <a class="brand-logo center">Chit Chat Room</a>
             </div>
-            <!-- <h3 id="chat_room">Chit-Chat Room</h3>
-            <div class="user_list">
-                <h5>Users:</h5>
-                <div class="users container">
-
-                </div>
+        </nav>
+        <div class="content row">
+            <div class="col s4 user_list">
+                <h5>Chatter:</h5>
+                <div class="users"></div>
             </div>
-            <div class="chat_room">
-                <h5>Ready..set...chat!</h5>
+            <div class="col s8 chat_room">
+                <div class="">
+                    <h5>Ready..set...chat!</h5>
 
-                <div class="container">
                     <div class="chat ">
                     </div>
                 </div>
             </div>
-
-            <form id="message_form" action="index.html" method="post">
-                <input type="hidden" id="userID" name="userID" >
-                <textarea class="u-full-width" id="message" name="message"></textarea>
-                <input class="button-primary right" type="submit" value="Submit">
-            </form> -->
-
         </div>
+        <div class="row" id="chat_form">
+            <form class="col s12" id="message_form" action="index.html" method="post">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">chat_bubble</i>
+                        <input type="hidden" id="userID" name="userID" >
 
-
-        <!-- <div class="container div_border">
-            <h3 id="chat_room">Chit-Chat Room</h3>
-            <div class="user_list">
-                <h5>Users:</h5>
-                <div class="users container">
-
-                </div>
-            </div>
-            <div class="chat_room">
-                <h5>Ready..set...chat!</h5>
-
-                <div class="container">
-                    <div class="chat ">
+                        <textarea id="message" name="message" class="materialize-textarea"></textarea>
+                        <label for="message">Message</label>
+                        <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <form id="message_form" action="index.html" method="post">
-                <input type="hidden" id="userID" name="userID" >
-                <textarea class="u-full-width" id="message" name="message"></textarea>
-                <input class="button-primary right" type="submit" value="Submit">
             </form>
-        </div> -->
-    </body>
+        </div>
+    </div>
+
+    <!-- <h3 id="chat_room">Chit-Chat Room</h3>
+    <div class="user_list">
+    <h5>Users:</h5>
+    <div class="users container">
+
+</div>
+</div>
+<div class="chat_room">
+<h5>Ready..set...chat!</h5>
+
+<div class="container">
+<div class="chat ">
+</div>
+</div>
+</div>
+
+<form id="message_form" action="index.html" method="post">
+<input type="hidden" id="userID" name="userID" >
+<textarea class="u-full-width" id="message" name="message"></textarea>
+<input class="button-primary right" type="submit" value="Submit">
+</form> -->
+
+</div>
+
+
+<!-- <div class="container div_border">
+<h3 id="chat_room">Chit-Chat Room</h3>
+<div class="user_list">
+<h5>Users:</h5>
+<div class="users container">
+
+</div>
+</div>
+<div class="chat_room">
+<h5>Ready..set...chat!</h5>
+
+<div class="container">
+<div class="chat ">
+</div>
+</div>
+</div>
+
+<form id="message_form" action="index.html" method="post">
+<input type="hidden" id="userID" name="userID" >
+<textarea class="u-full-width" id="message" name="message"></textarea>
+<input class="button-primary right" type="submit" value="Submit">
+</form>
+</div> -->
+</body>
 </html>
